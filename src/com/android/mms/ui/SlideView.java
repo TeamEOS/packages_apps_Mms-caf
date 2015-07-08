@@ -356,6 +356,7 @@ public class SlideView extends AbsoluteLayout implements
             if (null == mTextView) {
                 mTextView = new TextView(mContext);
                 mTextView.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                mTextView.setTextSize(MessageUtils.getFontSize());
                 mScrollText.addView(mTextView);
             }
             mScrollText.requestFocus();

@@ -73,6 +73,7 @@ import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.CommonDataKinds.StructuredName;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.provider.Telephony.Mms;
 import android.provider.Telephony.Sms;
@@ -172,6 +173,8 @@ public class MessageUtils {
     private static final int TIMESTAMP_LENGTH = 7;  // See TS 23.040 9.2.3.11
 
     private static boolean mCanShowDialog;
+
+    private static final int DEFAULT_FONT_SIZE = 18;
 
     private static final String TAG = LogTag.TAG;
     private static final String PREFERRED_SIM_ICON_INDEX = "preferred_sim_icon_index";
@@ -779,6 +782,17 @@ public class MessageUtils {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, TempFileProvider.SCRAP_CONTENT_URI);
         activity.startActivityForResult(intent, requestCode);
+    }
+
+    public static int getFontSize() {
+        SharedPreferences sp = PreferenceManager
+                .getDefaultSharedPreferences(MmsApp
+                        .getApplication());
+        int mFontSize = Integer
+                .parseInt(sp.getString(
+                        MessagingPreferenceActivity.FONT_SIZE_SETTING,
+                        Integer.toString(DEFAULT_FONT_SIZE)));
+        return mFontSize;
     }
 
     // Public for until tests

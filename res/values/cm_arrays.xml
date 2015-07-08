@@ -227,4 +227,21 @@
         <item>Smirk</item>                   <!-- 19: :-/ -->
         <item>Poker face</item>              <!-- 20: :-I -->
     </string-array>
+
+    <!-- Font Settings -->
+    <string-array name="pref_message_font_size_choices">
+        <item>@string/font_follow_system_font</item>
+        <item>@string/font_small</item>
+        <item>@string/font_medium</item>
+        <item>@string/font_large</item>
+        <item>@string/font_extra_large</item>
+    </string-array>
+
+    <string-array name="pref_message_font_size_values">
+        <item>18</item>
+        <item>20</item>
+        <item>24</item>
+        <item>28</item>
+        <item>32</item>
+    </string-array>
 </resources>

@@ -145,6 +145,9 @@ public class MessagingPreferenceActivity extends PreferenceActivity
     public static final String NOTIFICATION_VIBRATE_PATTERN =
             "pref_key_mms_notification_vibrate_pattern";
 
+    //Fontsize
+    public static final String FONT_SIZE_SETTING         = "pref_key_message_font_size";
+
     // Menu entries
     private static final int MENU_RESTORE_DEFAULTS    = 1;
 
@@ -182,6 +185,7 @@ public class MessagingPreferenceActivity extends PreferenceActivity
     private ListPreference mMmsExpiryPref;
     private ListPreference mMmsExpiryCard1Pref;
     private ListPreference mMmsExpiryCard2Pref;
+    private ListPreference mFontSizePref;
     private RingtonePreference mRingtonePref;
     private ListPreference mSmsStorePref;
     private ListPreference mSmsStoreCard1Pref;
@@ -208,6 +212,8 @@ public class MessagingPreferenceActivity extends PreferenceActivity
     private static final int EVENT_GET_SMSC_DONE = 1;
     private static final String EXTRA_EXCEPTION = "exception";
     private static SmscHandler mHandler = null;
+
+    public static final String MESSAGE_FONT_SIZE = "message_font_size";
 
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
@@ -371,6 +377,8 @@ public class MessagingPreferenceActivity extends PreferenceActivity
         // Blacklist screen - Needed for setting summary
         mBlacklist = (PreferenceScreen) findPreference(BLACKLIST);
 
+        mFontSizePref = (ListPreference) findPreference(FONT_SIZE_SETTING);
+
         setMessagePreferences();
     }
 
@@ -489,6 +497,7 @@ public class MessagingPreferenceActivity extends PreferenceActivity
         setRingtoneSummary(soundValue);
 
         mMessageSendDelayPref.setOnPreferenceChangeListener(this);
+        setSmsPreferFontSummary();
     }
 
     private void setMmsRelatedPref() {
@@ -1445,5 +1454,22 @@ public class MessagingPreferenceActivity extends PreferenceActivity
         return MmsConfig.getGroupMmsEnabled() &&
                 groupMmsPrefOn &&
                 !TextUtils.isEmpty(MessageUtils.getLocalNumber());
+    }
+
+    private void setSmsPreferFontSummary() {
+        if (mFontSizePref != null) {
+            mFontSizePref
+                    .setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                        public boolean onPreferenceChange(
+                                Preference preference, Object newValue) {
+                            final String summary = newValue.toString();
+                            int index = mFontSizePref.findIndexOfValue(summary);
+                            mFontSizePref.setSummary(mFontSizePref.getEntries()[index]);
+                            mFontSizePref.setValue(summary);
+                            return true;
+                        }
+                    });
+            mFontSizePref.setSummary(mFontSizePref.getEntry());
+        }
     }
 }

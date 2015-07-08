@@ -191,6 +191,7 @@ public class MessageListItem extends ZoomMessageListItem implements
         mMmsLayout = (LinearLayout) findViewById(R.id.mms_layout_view_parent);
 
         mAvatar.setOverlay(null);
+        setBodyTextSize(MessageUtils.getFontSize());
 
         // Add the views to be managed by the zoom control
         addZoomableTextView(mBodyTextView);
@@ -1033,6 +1034,13 @@ public class MessageListItem extends ZoomMessageListItem implements
 
     @Override
     public void toggle() {
+    }
+
+    public void setBodyTextSize(float size) {
+        if (mBodyTextView != null
+                && mBodyTextView.getVisibility() == View.VISIBLE) {
+            mBodyTextView.setTextSize(size);
+        }
     }
 
     protected void customSIMSmsView() {
